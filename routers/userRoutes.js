@@ -4,13 +4,20 @@ import User from '../models/userModel.js';
 //  handle errors
 const errorHandler = (err) => {
   console.log(err.message, err.code);
-
-  let errors = { email: '', password: ''};
+  let errors = { username:'', email: '', password: ''};
   
   //  duplicate error code
   if (err.code === 11000) {
-    errors.email = 'Email is alread taken.'
-    return errors;
+    if (err.message.includes('username')) {
+      errors.username = 'username is alread taken.'
+      return errors;
+    }
+
+    if (err.message.includes('email')) {
+      errors.email = 'Email is alread taken.'
+      return errors;
+    }
+    
   }
 
   //  error validation
@@ -21,6 +28,7 @@ const errorHandler = (err) => {
       errors[properties.path] = properties.message;
     });
   }
+
 
     return errors;
 }
