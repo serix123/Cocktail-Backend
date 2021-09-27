@@ -37,14 +37,18 @@ const userRouter = express.Router();
 
 // /register  POST  create new user to DB
 userRouter.post('/register', async (req, res) => {
-  const user = new User({
-    username: req.body.username,
-    email: req.body.email,
-    password: req.body.password,
-  });
+
+  const user = req.body;
+  const newUser = new User(user)
+
+  // const newUser = new User({
+  //   username: req.body.username,
+  //   email: req.body.email,
+  //   password: req.body.password,
+  // });
 
   try {
-    const savedUser = await user.save();
+    const savedUser = await newUser.save();
     res.json(savedUser);    
   } catch (err) {
     const errors = errorHandler(err);
@@ -59,8 +63,7 @@ userRouter.get('/', async (req, res) => {
     const users = await User.find();
     res.json(users);
   } catch (err) {
-    const error = errorHandler(err);
-    res.json({ message: error });
+    res.json({ message: err });
   }
 })
 

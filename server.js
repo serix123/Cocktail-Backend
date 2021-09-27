@@ -18,7 +18,7 @@ app.use(cors());
 
 
 // add api routes
-// app.use('/api/recipes', recipeRouter);
+app.use('/api/recipes', recipeRouter);
 app.use('/api/users', userRouter);
 
 
