@@ -25,22 +25,23 @@ recipeRouter.get('/', async (req, res) => {
   }catch(error){
     console.log(error)
   }
-  try {
-    const recipe = await Recipe.find();
-    res.json(recipe);
-  } catch (err) {
-    res.json({ message: err });
-  }
 })
 
 // get recipe by ID
 
+app.get('/:recipeId', (req, res) => {
+  res.send(req.params.recipeId)
+})
 
 // update recipe
 
 
 // delete recipe from DB
 
+app.delete('/:recipeId', function(req, res) {
+  const { id } = req.params;
+  res.send(`Delete record with id id`);
+});
 
 
 export default recipeRouter;

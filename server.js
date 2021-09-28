@@ -17,17 +17,15 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
 
-// add api routes
-app.use('/api/recipes', recipeRouter);
-app.use('/api/users', userRouter);
-
-
 // add DB connection
 mongoose.connect(process.env.DB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(app.listen(port, () => console.log(`listening on port ${port}`)))
   .catch((err) => console.log(err));
 
 
+// add api routes
+app.use('/api/recipes', recipeRouter);
+app.use('/api/users', userRouter);
  
 
 app.get('/', (req, res)=>{
