@@ -7,20 +7,20 @@ const recipeSchema = new mongoose.Schema({
     required: true,
     lowercase: true
   },
-  // imageURL: { type: String, required: true },
-  author: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+  image: { type: String},
+  author: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: false },
   ingredients: [
     {
-      name: {
+      ingredientName: {
         type: String,
-        required: true,
+        required: false,
         lowercase: true
       },
-      quantity: {
+      qty: {
         type: Number,
         required: false
       },
-      quantityType: {
+      qtyType: {
         type: String,
         required: false,
         lowercase: true
@@ -30,13 +30,17 @@ const recipeSchema = new mongoose.Schema({
   ],
   steps: [
     {
-      text:{
+      step:{
         type: String,
         lowercase: false
       },
       _id: false
     }
   ],
+  description: {
+    type: String,
+    lowercase: true
+  },
   dateCreated:{
     type: Date,
     default: Date.now,
