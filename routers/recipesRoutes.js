@@ -1,17 +1,17 @@
 import express from 'express';
+import mongoose from "mongoose";
 import Recipe from '../models/recipesModel.js';
 
 const recipeRouter = express.Router();
 
 // add recipes to DB
-recipeRouter.post('/create', async (req, res) => {
+recipeRouter.post('/', async (req, res) => {
   const recipe = req.body;
   console.log(recipe)
   const newRecipe = new Recipe(recipe);
   try {
     const savedRecipe = await newRecipe.save();
     res.json(savedRecipe);
-    console.log(savedRecipe);
     
   } catch (error) {
     console.log(error)
@@ -19,7 +19,6 @@ recipeRouter.post('/create', async (req, res) => {
 })
 
 // get all recipes
-
 recipeRouter.get('/', async (req, res) => {
   try{
     const recipes = await Recipe.find();
@@ -36,7 +35,20 @@ recipeRouter.get('/:recipeId', (req, res) => {
 })
 
 // update recipe
-
+recipeRouter.patch("/:id", async(req, res) => {
+  const { id: _id } = req.params;
+  const recipe = req.body;
+  if (mongoose.Types.ObjectId.isValid(_id)) return res.status(404).send('Recipe ID doesn not exist.');
+  
+  try {
+    const updatedRecipe = await Recipe.findByIdAndUpdate(_id, {...post,_id}, {new: true})
+    res.json(updatedRecipe);
+    
+  } catch (error) {
+    console.log(error)
+  }
+  
+});
 
 // delete recipe from DB
 
